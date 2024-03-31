@@ -2,6 +2,10 @@
 #define GAME_LOOP_H
 
 #include "textureManager.h"
+#include "land.h"
+#include "player.h"
+#include "sound.h"
+#include "pipe.h"
 #include <fstream>
 
 
@@ -12,9 +16,14 @@ class game:LTexture{
         struct input{
             enum type {QUIT, PLAY, NONE, PAUSE};
             type Type; 
+
         };
 
         input userInput;
+        land land;
+        player player; 
+        pipe pipe; 
+        sound sound; 
         
         game(); 
         ~game();
@@ -23,6 +32,18 @@ class game:LTexture{
 
         bool isQuit(){ 
             return quit; 
+        }
+
+        bool isDie(){
+            return die;
+        }
+
+        int getPipeWidth(){
+            return pipe.width(); 
+        }
+
+        int getPipeHeight(){
+            return pipe.height(); 
         }
 
         void takeInput(); 
@@ -40,6 +61,8 @@ class game:LTexture{
         void renderBestScore(); 
 
         void renderMessage(); 
+
+        void renderGameOver(); 
         
         void renderLand(); 
         

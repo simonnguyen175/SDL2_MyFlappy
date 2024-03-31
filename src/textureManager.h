@@ -23,7 +23,7 @@ class LTexture{
         short int getWidth();
         short int getHeight();
 
-        void free();
+        void Free();
         void Render(short int x, short int y, short int angle = 0, SDL_Rect* srcrect = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
         SDL_Texture* Texture;
@@ -39,14 +39,14 @@ class LTexture{
         static short int score;
 
         // Game parameters
-        const short int SCREEN_WIDTH = 350;
-        const short int SCREEN_HEIGHT = 625;
-        const short int PIPE_SPACE = 160;
-        const short int TOTAL_PIPE = 2;
-        const short int PIPE_DISTANCE = 220;
-        const short int LAND_HEIGHT = 140;
-        const short int SHIBA_WIDTH = 50;
-        const short int SHIBA_HEIGHT = 35;
+        static const short int SCREEN_WIDTH = 350;
+        static const short int SCREEN_HEIGHT = 625;
+        static const short int PIPE_SPACE = 160;
+        static const short int TOTAL_PIPE = 2;
+        static const short int PIPE_DISTANCE = 220;
+        static const short int LAND_HEIGHT = 140;
+        static const short int PLAYER_WIDTH = 50;
+        static const short int PLAYER_HEIGHT = 35;
 };
 
 class position{  

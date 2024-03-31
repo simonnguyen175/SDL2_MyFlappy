@@ -33,7 +33,7 @@ void LTexture::Render(short int x, short int y, short int angle, SDL_Rect* srcre
 }
 
 bool LTexture::Load(string path, double scale){
-    free(); 
+    Free(); 
 
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
     if ( loadedSurface == NULL ){
@@ -57,7 +57,7 @@ bool LTexture::Load(string path, double scale){
     return Texture != NULL; 
 }
 
-void LTexture::free(){  
+void LTexture::Free(){  
     if ( Texture != NULL ){
         SDL_DestroyTexture(Texture);
         Texture = NULL; 

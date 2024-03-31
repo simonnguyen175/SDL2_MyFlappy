@@ -12,10 +12,17 @@ void game::takeInput(){
 
 game::game(){
     initGraphic(); 
+	land.init(); 
+	pipe.init(); 
+	sound.init(); 
 }
 
 game::~game(){
-    free(); 
+	player.free(); 
+	pipe.free(); 
+	land.free(); 
+	sound.free(); 
+    Free(); 
     releaseGraphic(); 
 }
 
@@ -74,44 +81,44 @@ void game::releaseGraphic(){
 
 void game::renderBackground(){
     LTexture image;
-    image.Load("res/img/background.png", 1); 
+    image.Load("res/image/background.png", 1); 
     image.Render(0, 0);
-    image.free(); 
+    image.Free(); 
 }
 
 void game::renderLand(){
 	LTexture image;
 	image.Load("res/image/land.png", 1);
 	image.Render(SCREEN_WIDTH - image.getWidth(), SCREEN_HEIGHT - image.getHeight()); 
-	image.free(); 
+	image.Free(); 
 }
 
 void game::renderMessage(){
 	LTexture image;
 	image.Load("res/image/message.png", 1);
 	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 180);
-	image.free(); 
+	image.Free(); 
 }
 
 void game::resume(){
 	LTexture image;
 	image.Load("res/image/resume.png", 1);
 	image.Render(SCREEN_WIDTH - 50, 20);
-	image.free(); 
+	image.Free(); 
 }
 
 void game::pause(){
 	LTexture image;
 	image.Load("res/image/pause.png", 1);
 	image.Render(SCREEN_WIDTH - 50, 20);
-	image.free();  
+	image.Free();  
 }
 
 void game::renderPauseTab(){
 	LTexture image;
 	image.Load("res/image/pauseTab.png", 1);
 	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 230); 
-	image.free(); 
+	image.Free(); 
 }
 
 void game::renderScoreSmall(){
@@ -123,7 +130,7 @@ void game::renderScoreSmall(){
 		string path = "res/number/small/" + string(1, s[i]) + ".png"; 
 		image.Load(path.c_str(), scaleNum); 
 	}
-	image.free(); 
+	image.Free(); 
 }
 
 void game::renderScoreBig(){
@@ -135,7 +142,7 @@ void game::renderScoreBig(){
 		string path = "res/number/large/" + string(1, s[i]) + ".png"; 
 		image.Load(path.c_str(), scaleNum); 
 	}
-	image.free(); 
+	image.Free(); 
 }
 
 void game::renderBestScore(){
@@ -153,9 +160,39 @@ void game::renderBestScore(){
 		string path = "res/number/small/" + string(1, s[i]) + ".png"; 
 		image.Load(path.c_str(), scaleNum); 
 	}
-	image.free(); 
+	image.Free(); 
 
 	bestScoreout << bestScore;
 	bestScoreIn.close(); 
 	bestScoreout.close(); 
+}
+
+void game::renderGameOver(){
+	LTexture image;
+	image.Load("res/image/gameOver.png", 1);
+	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 150);
+	image.Free();
+}
+
+
+void game::replay(){
+	LTexture image;
+	image.Load("res/image/replay.png", 1);
+	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 380);
+	image.Free();
+}
+
+bool game::checkReplay(){
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	if (x > (SCREEN_WIDTH - 100)/2 && x < (SCREEN_WIDTH + 100) / 2 && y > 380 && y < 380 + 60){
+		return true;
+	}
+	return false;
+}
+
+void game::Restart(){
+    die = false;
+    score = 0;
+    player.resetTime();
 }
