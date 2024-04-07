@@ -9,12 +9,10 @@
 using namespace std; 
 
 int main(int argc, char* argv[]){
-    const short int FPS = 65;
+    const short int FPS = 60;
     const short int frameDelay = 1000/FPS; 
     Uint32 frameStart;
     short int frameTime; 
-    
-
     game g;
     bool isMenu = 0;
     bool isPause = 0;
@@ -45,8 +43,8 @@ int main(int argc, char* argv[]){
                     if ( g.checkReplay() ) isMenu = 0;
                     g.userInput.Type = game::input::NONE; 
                 }
-
-                g.renderBackground(); 
+                
+                g.background.render(); 
                 g.pipe.render(); 
                 g.land.render(); 
 
@@ -106,12 +104,12 @@ int main(int argc, char* argv[]){
             }
 
             if (isPause == 0 && g.userInput.Type == game::input::LEFT){
-                g.player.posPlayer.x -= 30;
+                g.player.posPlayer.x -= 50;
                 
             }
 
             if (isPause == 0 && g.userInput.Type == game::input::RIGHT){
-                g.player.posPlayer.x += 30;
+                g.player.posPlayer.x += 50;
             }
 
             if ( !isPause ){

@@ -30,7 +30,7 @@ void player::fall() {
         }
 
         if (time >= 0){
-            posPlayer.y = x0 + time * time * 0.18 - 6.5 * time;
+            posPlayer.y = x0 + time * time * 0.18 - 6.0 * time;
             time ++;
         }
     }
@@ -48,22 +48,22 @@ void player::update(short int pipeWidth, short int pipeHeight){
         }
 
         if (time >= 0){
-            posPlayer.y = x0 + time * time * 0.18 - 6.5 * time;
+            posPlayer.y = x0 + time * time * 0.18 - 6.0 * time;
             time ++;
         }
 
-        // if ( !messi[ahead].die && !messi[ahead].ckfall && posPlayer.x + 20 >= messi[ahead].posThreat.x - 10
-        //     && posPlayer.y >= messi[ahead].posThreat.y - 40 && posPlayer.y <= messi[ahead].posThreat.y + 40 ){
-        //         die = true; 
-        // }
+        if ( !obs[ahead].die && !obs[ahead].ckfall && posPlayer.x + 20 >= obs[ahead].posThreat.x - 10
+            && posPlayer.y >= obs[ahead].posThreat.y - 40 && posPlayer.y <= obs[ahead].posThreat.y + 40 ){
+                die = true; 
+        }
 
         if ( (posPlayer.x + getWidth() > posPipe[ahead].x + 5) && (posPlayer.x + 5 < posPipe[ahead].x + pipeWidth) &&
              (posPlayer.y + 5 < posPipe[ahead].y + pipeHeight || posPlayer.y  + getHeight() > posPipe[ahead].y + pipeHeight + PIPE_SPACE + 5) ){
             die = true;
         }
-        else if (posPlayer.x > posPipe[ahead].x + pipeWidth ){
-            ahead = ( ahead + 1 ) % TOTAL_PIPE;
-            score++;
+        else if ( posPlayer.x > posPipe[ahead].x + pipeWidth ){
+            ahead = (ahead + 1) % TOTAL_PIPE;
+            score ++;
         }
 
         if (posPlayer.y > SCREEN_HEIGHT - LAND_HEIGHT -  PLAYER_HEIGHT - 5 || posPlayer.y < - 10 ){

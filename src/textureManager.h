@@ -32,7 +32,7 @@ class LTexture{
         SDL_Texture* Texture;
         short int tWidth;
         short int tHeight; 
-        
+   
         // Common val
         static SDL_Window* gWindow;
         static SDL_Renderer* gRenderer;

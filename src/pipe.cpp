@@ -67,7 +67,6 @@ void pipe::update(){
                     obs[i].posThreat.y -= 0.5; 
                 }
                 else{
-                    cout << "pipe down\n"; 
                     posPipe[i].y += 0.5;
                     obs[i].posThreat.y += 0.5; 
                 }

@@ -2,40 +2,28 @@
 #include<iostream>
 
 void game::takeInput(){
-    while(SDL_PollEvent(&event) != 0){
-		if ( event.type == SDL_QUIT ){
-			userInput.Type = input::QUIT; 
-			quit = true; 
+	while(SDL_PollEvent(&event) != 0){
+		if (event.type == SDL_QUIT){
+			userInput.Type = input::QUIT;
+			quit = true;
 		}
-
-		if ( event.type == SDL_MOUSEBUTTONDOWN ){
-			userInput.Type = input::PLAY; 
+		else if (event.type == SDL_MOUSEBUTTONDOWN || (event.type == SDL_KEYDOWN && 
+		(event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_UP) && event.key.repeat == 0) ){
+			userInput.Type = input::PLAY;
 		}
-	
-		if ( event.type == SDL_KEYDOWN ){
-			switch ( event.key.keysym.sym ){
-			case SDLK_a:
-				{
-					userInput.Type = input::LEFT;
-				}
-				break; 
-			case SDLK_d:
-				{
-					userInput.Type = input::RIGHT;
-				}
-				break; 
-			
-			case SDLK_w:
-				{
-					userInput.Type = input::SHOOT; 
-				}
-				break; 
-			}
+		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE && event.key.repeat == 0){
+			userInput.Type = input::PAUSE;
 		}
-		else if (event.type == SDL_KEYUP){	
-			userInput.Type = input::NONE; 
+		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_w && event.key.repeat == 0){
+			userInput.Type = input::SHOOT;
 		}
-    }
+		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_d && event.key.repeat == 0){
+			userInput.Type = input::RIGHT;
+		}
+		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_a && event.key.repeat == 0){
+			userInput.Type = input::LEFT;
+		}
+	}
 }
 game::game(){
     initGraphic(); 
@@ -50,9 +38,10 @@ game::~game(){
 	pipe.free(); 
 	land.free(); 
 	sound.free();
-	background.free();  
+	background.free(); 
     Free(); 
     releaseGraphic(); 
+	cout << "out game\n"; 
 }
 
 bool game::initGraphic(){
@@ -108,13 +97,6 @@ void game::releaseGraphic(){
     IMG_Quit(); 
 }
 
-void game::renderBackground(){
-    LTexture image;
-    image.Load("res/image/background.png", 1); 
-    image.Render(0, 0);
-    image.Free(); 
-}
-
 void game::renderLand(){
 	LTexture image;
 	image.Load("res/image/land.png", 1);
@@ -145,8 +127,8 @@ void game::pause(){
 
 void game::renderPauseTab(){
 	LTexture image;
-	image.Load("res/image/pauseTab.png", 1);
-	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 230); 
+	image.Load("res/image/pauseTab.png", 0.85);
+	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 210); 
 	image.Free(); 
 }
 
@@ -158,18 +140,21 @@ void game::renderScoreSmall(){
 	for (short int i = len - 1; i >= 0; i --){
 		string path = "res/number/small/" + string(1, s[i]) + ".png"; 
 		image.Load(path.c_str(), scaleNum); 
+		image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
 	}
 	image.Free(); 
 }
 
 void game::renderScoreBig(){
+	cout << score << " render score\n"; 
 	string s = to_string(score);
 	short int len = s.length(); 
 	LTexture image;
 	
 	for (short int i = len - 1; i >= 0; i --){
 		string path = "res/number/large/" + string(1, s[i]) + ".png"; 
-		image.Load(path.c_str(), scaleNum); 
+		image.Load(path.c_str(), 1); 
+		image.Render((SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i + 30) * i, 100);
 	}
 	image.Free(); 
 }
@@ -188,6 +173,7 @@ void game::renderBestScore(){
 	for (short int i = len - 1; i >= 0; i --){
 		string path = "res/number/small/" + string(1, s[i]) + ".png"; 
 		image.Load(path.c_str(), scaleNum); 
+		image.Render(260 - image.getWidth()*(len-i-1)*0.75 - 5*(len - i - 1), 315);
 	}
 	image.Free(); 
 
@@ -198,7 +184,7 @@ void game::renderBestScore(){
 
 void game::renderGameOver(){
 	LTexture image;
-	image.Load("res/image/gameOver.png", 1);
+	image.Load("res/image/gameOver.png", 0.85);
 	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 150);
 	image.Free();
 }

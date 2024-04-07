@@ -81,7 +81,7 @@ class game:LTexture{
     
     private:
         const double scaleNum = 0.75; 
-        short int score, bestScore;     
+        short int bestScore;     
 };
 
 #endif
