@@ -76,7 +76,83 @@ int main(int argc, char* argv[]){
             }
             g.pipe.init(); 
         }
-        
+        else{
+            g.takeInput(); 
+
+            if ( g.userInput.Type == game::input::PAUSE ){
+                isPause = abs(1- isPause); 
+                g.userInput.Type = game::input::NONE; 
+            }  
+
+            if ( isPause == 0 && g.userInput.Type == game::input::PLAY ){
+                if ( isSound ) g.sound.playBreath(); 
+                g.player.resetTime(); 
+                g.userInput.Type = game::input::NONE; 
+            }
+
+            g.background.render(); 
+            g.pipe.render(); 
+            g.land.render(); 
+            g.player.render(); 
+            g.renderScoreBig(); 
+
+            for (auto &curB : ballBucket) curB.render(); 
+            
+            if (isPause == 0 && g.userInput.Type == game::input::SHOOT){
+                ball newBall;
+                newBall.init(g.player.posPlayer.x, g.player.posPlayer.y); 
+                ballBucket.push_back(newBall); 
+                g.userInput.Type = game::input::NONE;
+            }
+
+            if (isPause == 0 && g.userInput.Type == game::input::LEFT){
+                g.player.posPlayer.x -= 30;
+                
+            }
+
+            if (isPause == 0 && g.userInput.Type == game::input::RIGHT){
+                g.player.posPlayer.x += 30;
+            }
+
+            if ( !isPause ){
+                g.player.update(g.getPipeWidth(), g.getPipeHeight());
+
+                for (auto &curB : ballBucket)
+                    curB.update();
+
+                g.pipe.update();
+                for (int i = 0; i < ballBucket.size(); i ++){
+                    if ( g.pipe.updateThreat(ballBucket[i].posBall.x, ballBucket[i].posBall.y) || ballBucket[i].posBall.x >= SCREEN_WIDTH ){ 
+                        ballBucket[i].free();
+                        ballBucket.erase(ballBucket.begin() + i); 
+                    }
+                }
+
+                g.land.update();
+                g.background.update(); 
+                g.pause();
+            }
+            else{
+                g.resume(); 
+                g.renderPauseTab(); 
+                g.renderScoreSmall(); 
+                g.renderBestScore(); 
+                g.replay(); 
+                g.sound.renderSound();  
+                
+                if ( g.userInput.Type == game::input::PLAY ){
+                    if ( g.checkReplay() ){
+                        isPause = 0;
+                    }   
+                    else if ( g.sound.checkSound() ){
+                        isSound = abs(1- isSound); 
+                    }
+                    g.userInput.Type = game::input::NONE; 
+                }
+            }
+            
+            g.display(); 
+        }
 
         // Limit FPS
         frameTime = SDL_GetTicks() - frameStart;

@@ -2,26 +2,55 @@
 #include<iostream>
 
 void game::takeInput(){
-    while ( SDL_PollEvent(&event) != 0 ){
-        if ( event.type == SDL_QUIT ){
-            userInput.Type = input::QUIT;
-            quit = true; 
-        }
+    while(SDL_PollEvent(&event) != 0){
+		if ( event.type == SDL_QUIT ){
+			userInput.Type = input::QUIT; 
+			quit = true; 
+		}
+
+		if ( event.type == SDL_MOUSEBUTTONDOWN ){
+			userInput.Type = input::PLAY; 
+		}
+	
+		if ( event.type == SDL_KEYDOWN ){
+			switch ( event.key.keysym.sym ){
+			case SDLK_a:
+				{
+					userInput.Type = input::LEFT;
+				}
+				break; 
+			case SDLK_d:
+				{
+					userInput.Type = input::RIGHT;
+				}
+				break; 
+			
+			case SDLK_w:
+				{
+					userInput.Type = input::SHOOT; 
+				}
+				break; 
+			}
+		}
+		else if (event.type == SDL_KEYUP){	
+			userInput.Type = input::NONE; 
+		}
     }
 }
-
 game::game(){
     initGraphic(); 
 	land.init(); 
 	pipe.init(); 
-	sound.init(); 
+	sound.init();
+	background.init();  
 }
 
 game::~game(){
 	player.free(); 
 	pipe.free(); 
 	land.free(); 
-	sound.free(); 
+	sound.free();
+	background.free();  
     Free(); 
     releaseGraphic(); 
 }

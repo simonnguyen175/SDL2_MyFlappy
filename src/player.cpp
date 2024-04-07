@@ -25,9 +25,12 @@ void player::fall() {
             x0 = posPlayer.y;
             angle = -25;
         }
+        else if ( angle < 70 && time > 30 ){
+            angle += 3; 
+        }
 
         if (time >= 0){
-            posPlayer.y = x0 + time * time * 0.18 - 7.3 * time;
+            posPlayer.y = x0 + time * time * 0.18 - 6.5 * time;
             time ++;
         }
     }
@@ -45,7 +48,7 @@ void player::update(short int pipeWidth, short int pipeHeight){
         }
 
         if (time >= 0){
-            posPlayer.y = x0 + time * time * 0.18 - 7.3 * time;
+            posPlayer.y = x0 + time * time * 0.18 - 6.5 * time;
             time ++;
         }
 

@@ -6,15 +6,15 @@
 #include "player.h"
 #include "sound.h"
 #include "pipe.h"
+#include "background.h"
 #include <fstream>
-
 
 using namespace std;
 
 class game:LTexture{ 
     public:
         struct input{
-            enum type {QUIT, PLAY, NONE, PAUSE};
+            enum type {QUIT, PLAY, NONE, PAUSE, LEFT, RIGHT, SHOOT};
             type Type; 
 
         };
@@ -24,6 +24,7 @@ class game:LTexture{
         player player; 
         pipe pipe; 
         sound sound; 
+        background background; 
         
         game(); 
         ~game();

@@ -2,12 +2,14 @@
 #define PIPE_H
 
 #include "textureManager.h"
+#include "threat.h"
 #include <iostream>
 #include <vector> 
 
 using namespace std;
 
 extern vector<position> posPipe;
+extern threat obs[2];  
 
 class pipe:LTexture{
     private:

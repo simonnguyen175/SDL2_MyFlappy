@@ -10,6 +10,9 @@
 
 using namespace std;
 
+static const short int SCREEN_WIDTH = 350;
+static const short int SCREEN_HEIGHT = 625;
+
 class LTexture{
     public:
         // Texture func and val
@@ -51,7 +54,7 @@ class LTexture{
 
 class position{  
     public: 
-        short int x, y; 
+        float x, y; 
         short int angle, state;
         void getPos(const short int x, const short int y); 
 }; 
