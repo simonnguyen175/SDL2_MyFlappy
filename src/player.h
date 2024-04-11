@@ -8,7 +8,7 @@ using namespace std;
 
 class player: public LTexture{
     public:
-        bool init();
+        bool init(short int x, short int y);
 
         void render();
 

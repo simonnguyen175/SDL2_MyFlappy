@@ -17,5 +17,6 @@ void ball::render(){
 
 void ball::update(){    
     posBall.x += 10;
-    if ( curChar == 0 ) angle += 5; 
+    if ( curChar == 0 ) angle += 5;
+    if ( curChar == 2 ) angle += 20;
 }

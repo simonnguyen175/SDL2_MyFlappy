@@ -9,7 +9,7 @@ using namespace std;
 
 class sound:LTexture{
     private:
-        const short int POS_X = 107;
+        const short int POS_X = 109 + 135;
         const short int POS_Y = 267;
         bool isPlay = 0;
         Mix_Chunk* breath = NULL;

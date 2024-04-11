@@ -63,6 +63,8 @@ class game: public LTexture{
 
         void renderBestScore(); 
 
+        void renderGameTitle(); 
+
         void renderMessage(); 
 
         void renderGameOver(); 
@@ -72,8 +74,18 @@ class game: public LTexture{
         void resume(); 
 
         void pause(); 
+        
+        void exit(); 
+        
+        bool checkExit();
+
+        void help(); 
+
+        bool checkHelp(); 
 
         void renderPauseTab(); 
+
+        void renderHelpMenu(); 
 
         void replay(); 
 

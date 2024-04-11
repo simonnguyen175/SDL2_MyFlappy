@@ -10,11 +10,12 @@
 
 using namespace std;
 
-static const short int SCREEN_WIDTH = 350;
+static const short int SCREEN_WIDTH = 625;
 static const short int SCREEN_HEIGHT = 625;
-const string character[] = {"ronaldo", "putin"}; 
-const string Ball[] = {"ballpxl", "bulletpxl"}; 
-const string Threat[] = {"messi", "nato"}; 
+static const short int TOTAL_PIPE = 4;
+const string character[] = {"ronaldo", "putin", "banh"}; 
+const string Ball[] = {"ballpxl", "bulletpxl", "tay"}; 
+const string Threat[] = {"messi"}; 
 
 class LTexture{
     public:
@@ -46,10 +47,11 @@ class LTexture{
         static short int curChar;
 
         // Game parameters
-        static const short int SCREEN_WIDTH = 350;
+        static const short int SCREEN_WIDTH = 625;
         static const short int SCREEN_HEIGHT = 625;
         static const short int PIPE_SPACE = 160;
-        static const short int TOTAL_PIPE = 2;
+        static const short int TOTAL_PIPE = 4;
+        static const short int TOTAL_CHARACTER = 3; 
         static const short int PIPE_DISTANCE = 220;
         static const short int LAND_HEIGHT = 150;
         static const short int PLAYER_WIDTH = 50;

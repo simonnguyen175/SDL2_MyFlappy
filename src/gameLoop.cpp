@@ -118,10 +118,18 @@ void game::updateBackground(){
 	}
 }
 
+void game::renderGameTitle(){
+	LTexture image;
+	image.Load("res/image/gameTitle.png", 1);
+	cout << "render game title\n"; 
+	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 35);
+	image.Free(); 	
+}
+
 void game::renderMessage(){
 	LTexture image;
 	image.Load("res/image/message.png", 1);
-	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 180);
+	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 160);
 	image.Free(); 
 }
 
@@ -139,6 +147,38 @@ void game::pause(){
 	image.Free();  
 }
 
+void game::exit(){
+	LTexture image;
+	image.Load("res/image/exit.png", 1);
+	image.Render(SCREEN_WIDTH - 22 - 45, SCREEN_HEIGHT - 40);
+	image.Free(); 
+}
+
+bool game::checkExit(){ 
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	if (x > (SCREEN_WIDTH - 22 - 45) && x < (SCREEN_WIDTH - 22) && y > SCREEN_HEIGHT - 40  && y < SCREEN_HEIGHT - 20){
+		return true;
+	}
+	return false;	
+}
+
+void game::help(){
+	LTexture image;
+	image.Load("res/image/help.png", 1);
+	image.Render(22, SCREEN_HEIGHT - 45);
+	image.Free(); 
+}
+
+bool game::checkHelp(){ 
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	if (x > 22 && x < 22 + 45  && y > SCREEN_HEIGHT - 40  && y < SCREEN_HEIGHT - 15){
+		return true;
+	}
+	return false;	
+}
+
 void game::renderPauseTab(){
 	LTexture image;
 	image.Load("res/image/pauseTab.png", 0.85);
@@ -146,12 +186,19 @@ void game::renderPauseTab(){
 	image.Free(); 
 }
 
+void game::renderHelpMenu(){
+	LTexture image;
+	image.Load("res/image/HelpMenu.png", 0.8);
+	image.Render((SCREEN_WIDTH - image.getWidth()) / 2, 225); 
+	image.Free(); 	
+}
+
 void game::nextButton(){
 	LTexture image;
 	image.Load("res/image/nextRight.png", 1);
-	image.Render(140, 322);
+	image.Render(140 + 135, 322);
 	image.Load("res/image/nextLeft.png", 1);
-	image.Render(88, 322);
+	image.Render(88 + 135, 322);
 	image.Free();
 }
 
@@ -159,19 +206,19 @@ void game::curCharacter(){
 	LTexture image;
 	string path = "res/image/" + character[curChar] + ".png";
 	image.Load(path.c_str(), 0.8);
-	image.Render(105, 315);
+	image.Render(107 + 135, 315);
 	image.Free();
 }
 
 bool game::changeCharacter(){
 	int x, y;
 	SDL_GetMouseState(&x, &y);
-	if ( (x > 140 && x < 140+13) && (y > 322 && y < 322 + 16) ){
-		curChar = (curChar + 1) % 2;
+	if ( (x > 140 + 135 && x < 140+13 + 135) && (y > 322 && y < 322 + 16) ){
+		curChar = (curChar + 1) % TOTAL_CHARACTER;
 		return true; 
 	}
-	if ( (x > 88 && x < 88 + 13) && (y > 322 && y < 322 + 16) ){
-		curChar = (curChar - 1 + 2) % 2;
+	if ( (x > 88 + 135 && x < 88 + 13 + 135) && (y > 322 && y < 322 + 16) ){
+		curChar = (curChar - 1 + 2) % TOTAL_CHARACTER;
 		return true;  
 	}
 	return false;
@@ -185,7 +232,7 @@ void game::renderScoreSmall(){
 	for (short int i = len - 1; i >= 0; i --){
 		string path = "res/number/small/" + string(1, s[i]) + ".png"; 
 		image.Load(path.c_str(), scaleNum); 
-		image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
+		image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1) + 135, 268);
 	}
 	image.Free(); 
 }
@@ -217,7 +264,7 @@ void game::renderBestScore(){
 	for (short int i = len - 1; i >= 0; i --){
 		string path = "res/number/small/" + string(1, s[i]) + ".png"; 
 		image.Load(path.c_str(), scaleNum); 
-		image.Render(260 - image.getWidth()*(len-i-1)*0.75 - 5*(len - i - 1), 315);
+		image.Render(260 - image.getWidth()*(len-i-1)*0.75 - 5*(len - i - 1) + 135, 315);
 	}
 	image.Free(); 
 
@@ -244,7 +291,7 @@ void game::replay(){
 bool game::checkReplay(){
 	int x, y;
 	SDL_GetMouseState(&x, &y);
-	if (x > (SCREEN_WIDTH - 100)/2 && x < (SCREEN_WIDTH + 100) / 2 && y > 380 && y < 380 + 60){
+	if (x > (SCREEN_WIDTH - 100)/2 && x < (SCREEN_WIDTH + 135) / 2 && y > 380 && y < 380 + 60){
 		return true;
 	}
 	return false;

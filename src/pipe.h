@@ -9,8 +9,8 @@
 using namespace std;
 
 extern vector<position> posPipe;
-extern bool passed[2]; 
-extern threat obs[2];  
+extern bool passed[TOTAL_PIPE]; 
+extern threat threats[TOTAL_PIPE];  
 
 class pipe:LTexture{
     private:

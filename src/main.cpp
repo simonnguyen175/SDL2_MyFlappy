@@ -18,17 +18,15 @@ int main(int argc, char* argv[]){
     bool isPause = 0;
     bool isSound = 1;
     bool begin = 1; 
+    bool isHelpMenu = 0; 
     vector<ball> ballBucket; 
 
     while ( !g.isQuit() ){
         frameStart = SDL_GetTicks(); 
         if ( g.isDie() ){
             ballBucket.clear(); 
-            if ( begin ){
-                isMenu = 0;
-                begin = 0; 
-            }
-            else isMenu = 1; 
+            isPause = 0;
+            isHelpMenu = 0;
 
             if ( isMenu ){
                 g.sound.playHit(); 
@@ -47,6 +45,7 @@ int main(int argc, char* argv[]){
                 g.renderBackground(); 
                 g.pipe.render(); 
                 g.land.render(); 
+                g.renderGameTitle(); 
 
                 if ( isMenu ){
                     g.player.render(); 
@@ -58,13 +57,64 @@ int main(int argc, char* argv[]){
                 }
                 else{
                     g.pipe.init(); 
-                    g.player.init();
+                    g.player.init(75, SCREEN_HEIGHT / 2 - 10);
                     g.player.render(); 
                     g.renderMessage(); 
+
+                    if ( g.userInput.Type == game::input::PAUSE ){
+                        isPause = abs(1- isPause); 
+                        g.userInput.Type = game::input::NONE; 
+                    }
+
+                    if ( isHelpMenu ){
+                        g.renderHelpMenu(); 
+                        g.exit(); 
+                        g.help(); 
+                        
+                        if ( g.userInput.Type == game::input::PLAY ){
+                            if ( g.checkHelp() ){
+                                isHelpMenu = abs(1-isHelpMenu); 
+                            }
+                            else if ( g.checkExit() ){
+                                g.quit = true; 
+                            }
+                            g.userInput.Type = game::input::NONE; 
+                        }
+                    }
+                    else if ( isPause ){
+                        g.resume(); 
+                        g.renderPauseTab(); 
+                        g.renderScoreSmall(); 
+                        g.renderBestScore(); 
+                        g.sound.renderSound(); 
+                        g.curCharacter(); 
+                        g.nextButton(); 
+                        g.exit(); 
+                        g.help();
+   
+                        if ( g.userInput.Type == game::input::PLAY ){
+                            if ( g.sound.checkSound() ){
+                                isSound = abs(1- isSound); 
+                            }
+                            else if ( g.changeCharacter() ){
+                                g.player.init(75, SCREEN_HEIGHT / 2 - 10); 
+                            }
+                            else if ( g.checkHelp() ){
+                                isHelpMenu = abs(1-isHelpMenu); 
+                            }
+                            else if ( g.checkExit() ){
+                                g.quit = true; 
+                            }
+                            g.userInput.Type = game::input::NONE; 
+                        }
+                    }
+                    else g.pause();
+
                     if ( g.userInput.Type == game::input::PLAY ){
                         cout << "play\n"; 
                         g.Restart();
                         isMenu = 0;
+                        begin = 0; 
                         g.userInput.Type = game::input::NONE;
                     }
                     g.land.update();    
@@ -98,19 +148,19 @@ int main(int argc, char* argv[]){
 
             if (isPause == 0 && g.userInput.Type == game::input::SHOOT){
                 ball newBall;
-                newBall.init(g.player.posPlayer.x + g.player.getWidth() - 30, g.player.posPlayer.y + g.player.getHeight() - 30); 
+                newBall.init(g.player.posPlayer.x + g.player.getWidth() - 30, g.player.posPlayer.y + g.player.getHeight() - 20); 
                 ballBucket.push_back(newBall); 
                 g.userInput.Type = game::input::NONE;
             }
 
             if ( !isPause ){
                 if (isPause == 0 && g.userInput.Type == game::input::LEFT){
-                    g.player.posPlayer.x -= 50;
+                    g.player.posPlayer.x -= 55;
                     g.userInput.Type = game::input::NONE; 
                 }
 
                 if (isPause == 0 && g.userInput.Type == game::input::RIGHT){
-                    g.player.posPlayer.x += 50;
+                    g.player.posPlayer.x += 55;
                     g.userInput.Type = game::input::NONE; 
                 }
 
@@ -132,26 +182,50 @@ int main(int argc, char* argv[]){
                 g.pause();
             }
             else{
-                g.resume(); 
-                g.renderPauseTab(); 
-                g.renderScoreSmall(); 
-                g.renderBestScore(); 
-                g.replay(); 
-                g.sound.renderSound(); 
-                g.curCharacter(); 
-                g.nextButton(); 
-                
-                if ( g.userInput.Type == game::input::PLAY ){
-                    if ( g.checkReplay() ){
-                        isPause = 0;
-                    }   
-                    else if ( g.sound.checkSound() ){
-                        isSound = abs(1- isSound); 
+                if ( isHelpMenu ){
+                    g.renderHelpMenu(); 
+                    g.exit(); 
+                    g.help(); 
+                    g.resume();
+                    
+                    if ( g.userInput.Type == game::input::PLAY ){
+                        if ( g.checkHelp() ){
+                            isHelpMenu = abs(1-isHelpMenu); 
+                        }
+                        else if ( g.checkExit() ){
+                            g.quit = true; 
+                        }
+                        g.userInput.Type = game::input::NONE; 
                     }
-                    else if ( g.changeCharacter() ){
-                        g.player.init(); 
+                }
+                else{
+                    g.resume(); 
+                    g.renderPauseTab(); 
+                    g.renderScoreSmall(); 
+                    g.renderBestScore(); 
+                    g.sound.renderSound(); 
+                    g.curCharacter(); 
+                    g.nextButton(); 
+                    g.exit(); 
+                    g.help();
+
+                    if ( g.userInput.Type == game::input::PLAY ){
+                        if ( g.sound.checkSound() ){
+                            isSound = abs(1- isSound); 
+                        }
+                        else if ( g.changeCharacter() ){
+                            short int cx = g.player.posPlayer.x;
+                            short int cy = g.player.posPlayer.y; 
+                            g.player.init(cx, cy); 
+                        }
+                        else if ( g.checkHelp() ){
+                            isHelpMenu = abs(1-isHelpMenu); 
+                        }
+                        else if ( g.checkExit() ){
+                            g.quit = true; 
+                        }
+                        g.userInput.Type = game::input::NONE; 
                     }
-                    g.userInput.Type = game::input::NONE; 
                 }
             }
             

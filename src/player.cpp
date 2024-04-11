@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <iostream>
 
-bool player::init(){
+bool player::init(short int x, short int y){
     string player_path = "res/image/" + character[curChar] + ".png";
     Load(player_path.c_str(), 1);
-    posPlayer.getPos(75, SCREEN_HEIGHT / 2 - 10);
+    posPlayer.getPos(x, y);
     ahead = 0;
     angle = 0;
     return true; 
@@ -37,13 +37,6 @@ void player::fall() {
     else return;
 }
 
-// bool player::insidePipe(short int pipeWidth, short int pipeHeight){
-//     if ( !die ){
-//         return (posPlayer.x >= posPipe[ahead].x + pipeWidth pe)
-//     }
-//     return false; 
-// }
-
 void player::update(short int pipeWidth, short int pipeHeight){
     if ( !die ){
         if ( time == 0 ){
@@ -59,8 +52,8 @@ void player::update(short int pipeWidth, short int pipeHeight){
             time ++;
         }
 
-        if ( !obs[ahead].die && !obs[ahead].ckfall && posPlayer.x + 20 >= obs[ahead].posThreat.x - 10
-            && posPlayer.y >= obs[ahead].posThreat.y - 40 && posPlayer.y <= obs[ahead].posThreat.y + 40 ){
+        if ( !threats[ahead].die && !threats[ahead].ckfall && posPlayer.x + 20 >= threats[ahead].posThreat.x - 10
+            && posPlayer.y >= threats[ahead].posThreat.y - 40 && posPlayer.y <= threats[ahead].posThreat.y + 40 ){
                 die = true; 
         }
 

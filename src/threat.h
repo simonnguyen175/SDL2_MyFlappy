@@ -5,14 +5,15 @@
 
 class threat:LTexture{
     public: 
-        bool init(int x, int y); 
+        bool init(short int x, short int y); 
         void free(); 
-        void update(int delta); 
+        void update(short int delta); 
         void render(); 
         void fall(); 
         bool die = 1, ckfall = 0; 
-        short int angle, time = 0, x0;
+        short int angle, time = 0, x0, curFrame = 0;
         position posThreat; 
+        SDL_Rect frame[3]; 
 };
 
 #endif

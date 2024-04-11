@@ -5,7 +5,7 @@
 
 bool background::init(short int id){
     posBackground.getPos(0, 0);
-    string back_path = "res/image/layer" + to_string(id) + ".png";
+    string back_path = "res/image/background/layer" + to_string(id) + ".png";
     if ( isNULL() ){
         if ( Load(back_path.c_str(), 1) ){
             cout << "Load " << back_path << '\n'; 
