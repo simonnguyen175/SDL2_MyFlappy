@@ -95,24 +95,25 @@ int main(int argc, char* argv[]){
             g.renderScoreBig(); 
 
             for (auto &curB : ballBucket) curB.render(); 
-            
+
             if (isPause == 0 && g.userInput.Type == game::input::SHOOT){
                 ball newBall;
-                newBall.init(g.player.posPlayer.x, g.player.posPlayer.y); 
+                newBall.init(g.player.posPlayer.x + g.player.getWidth() - 30, g.player.posPlayer.y + g.player.getHeight() - 30); 
                 ballBucket.push_back(newBall); 
                 g.userInput.Type = game::input::NONE;
             }
 
-            if (isPause == 0 && g.userInput.Type == game::input::LEFT){
-                g.player.posPlayer.x -= 50;
-                
-            }
-
-            if (isPause == 0 && g.userInput.Type == game::input::RIGHT){
-                g.player.posPlayer.x += 50;
-            }
-
             if ( !isPause ){
+                if (isPause == 0 && g.userInput.Type == game::input::LEFT){
+                    g.player.posPlayer.x -= 50;
+                    g.userInput.Type = game::input::NONE; 
+                }
+
+                if (isPause == 0 && g.userInput.Type == game::input::RIGHT){
+                    g.player.posPlayer.x += 50;
+                    g.userInput.Type = game::input::NONE; 
+                }
+
                 g.player.update(g.getPipeWidth(), g.getPipeHeight());
 
                 for (auto &curB : ballBucket)
@@ -136,7 +137,9 @@ int main(int argc, char* argv[]){
                 g.renderScoreSmall(); 
                 g.renderBestScore(); 
                 g.replay(); 
-                g.sound.renderSound();  
+                g.sound.renderSound(); 
+                g.curCharacter(); 
+                g.nextButton(); 
                 
                 if ( g.userInput.Type == game::input::PLAY ){
                     if ( g.checkReplay() ){
@@ -144,6 +147,9 @@ int main(int argc, char* argv[]){
                     }   
                     else if ( g.sound.checkSound() ){
                         isSound = abs(1- isSound); 
+                    }
+                    else if ( g.changeCharacter() ){
+                        g.player.init(); 
                     }
                     g.userInput.Type = game::input::NONE; 
                 }

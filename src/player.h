@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class player:LTexture{
+class player: public LTexture{
     public:
         bool init();
 

@@ -3,6 +3,7 @@
 
 bool LTexture::quit = 0;
 bool LTexture::die = true;
+short int LTexture::curChar = 0; 
 short int LTexture::score = 0;
 SDL_Window* LTexture::gWindow = NULL;
 SDL_Renderer* LTexture::gRenderer = NULL; 

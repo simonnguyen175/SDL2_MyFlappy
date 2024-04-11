@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class game:LTexture{ 
+class game: public LTexture{ 
     public:
         struct input{
             enum type {QUIT, PLAY, NONE, PAUSE, LEFT, RIGHT, SHOOT};
@@ -78,6 +78,12 @@ class game:LTexture{
         bool checkReplay(); 
 
         void Restart(); 
+        
+        void curCharacter();
+
+        void nextButton(); 
+
+        bool changeCharacter(); 
     
     private:
         const double scaleNum = 0.75; 

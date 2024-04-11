@@ -132,6 +132,37 @@ void game::renderPauseTab(){
 	image.Free(); 
 }
 
+void game::nextButton(){
+	LTexture image;
+	image.Load("res/image/nextRight.png", 1);
+	image.Render(140, 322);
+	image.Load("res/image/nextLeft.png", 1);
+	image.Render(88, 322);
+	image.Free();
+}
+
+void game::curCharacter(){
+	LTexture image;
+	string path = "res/image/" + character[curChar] + ".png";
+	image.Load(path.c_str(), 0.8);
+	image.Render(105, 315);
+	image.Free();
+}
+
+bool game::changeCharacter(){
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	if ( (x > 140 && x < 140+13) && (y > 322 && y < 322 + 16) ){
+		curChar = (curChar + 1) % 2;
+		return true; 
+	}
+	if ( (x > 88 && x < 88 + 13) && (y > 322 && y < 322 + 16) ){
+		curChar = (curChar - 1 + 2) % 2;
+		return true;  
+	}
+	return false;
+}
+
 void game::renderScoreSmall(){
 	string s = to_string(score);
 	short int len = s.length(); 
@@ -146,7 +177,6 @@ void game::renderScoreSmall(){
 }
 
 void game::renderScoreBig(){
-	cout << score << " render score\n"; 
 	string s = to_string(score);
 	short int len = s.length(); 
 	LTexture image;

@@ -5,6 +5,8 @@
 vector<position> posPipe;
 threat obs[2];
 int time[2]; 
+short int cmove = 0; 
+bool passed[2]; 
 
 bool pipe::init(){
     posPipe.clear();
@@ -12,6 +14,7 @@ bool pipe::init(){
         position temp;
         temp.getPos(SCREEN_WIDTH + i * PIPE_DISTANCE, (rand() % (randMax - randMin + 1)) + randMin);
         posPipe.push_back(temp);
+        passed[i] = 0; 
         
         obs[i].die = 1; 
         obs[i].posThreat.x = temp.x - 5;
@@ -48,10 +51,24 @@ void pipe::update(){
             if ( posPipe[i].x < -getWidth() ){
                 posPipe[i].y = (rand() % (randMax - randMin + 1)) + randMin;
                 posPipe[i].x = posPipe[(i + TOTAL_PIPE - 1) % TOTAL_PIPE].x + PIPE_DISTANCE;   
-                time[i] = 0;
+                time[i] = 0; 
+                passed[i] = 0; 
+            
+                if ( cmove > 5 ) cmove = 0; 
+                
+                if ( !cmove && rand() % 8 == 0 ){
+                    cmove = 1; 
+                    obs[i].die = 1; 
+                }
 
-                if ( rand() % 3 == 0 ) obs[i].die = 0; 
-                else obs[i].die = 1; 
+                if ( cmove ){
+                    cmove ++; 
+                    obs[i].die = 1; 
+                }
+                else{
+                    if ( rand() % 3 == 0 ) obs[i].die = 0; 
+                    else obs[i].die = 1; 
+                }
 
                 obs[i].ckfall = 0;
                 obs[i].posThreat.x = posPipe[i].x + width()/2 - 25;
@@ -62,18 +79,24 @@ void pipe::update(){
                 posPipe[i].x -= 3;
                 obs[i].posThreat.x -= 3; 
                 time[i] ++; 
-                if ( (time[i]/75)%2 == 0 ){
-                    posPipe[i].y -= 0.5; 
-                    obs[i].posThreat.y -= 0.5; 
-                }
-                else{
-                    posPipe[i].y += 0.5;
-                    obs[i].posThreat.y += 0.5; 
+
+                if ( cmove ){
+                    if ( (time[i]/75)%2 == 0 ){
+                        posPipe[i].y -= 1; 
+                        obs[i].posThreat.y -= 1; 
+                    }
+                    else{
+                        posPipe[i].y += 1;
+                        obs[i].posThreat.y += 1; 
+                    }
                 }
 
                 if ( obs[i].ckfall ) obs[i].fall(); 
             }
         }
+    }
+    else{
+        cmove = 0; 
     }
 }
 

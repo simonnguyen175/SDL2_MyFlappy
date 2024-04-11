@@ -12,6 +12,9 @@ using namespace std;
 
 static const short int SCREEN_WIDTH = 350;
 static const short int SCREEN_HEIGHT = 625;
+const string character[] = {"ronaldo", "putin"}; 
+const string Ball[] = {"ballpxl", "bulletpxl"}; 
+const string Threat[] = {"messi", "nato"}; 
 
 class LTexture{
     public:
@@ -40,6 +43,7 @@ class LTexture{
         static bool quit; 
         static bool die;
         static short int score;
+        static short int curChar;
 
         // Game parameters
         static const short int SCREEN_WIDTH = 350;

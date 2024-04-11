@@ -3,8 +3,8 @@
 #include <iostream>
 
 bool player::init(){
-    string player_path = "res/image/ronaldo.png";
-    Load(player_path.c_str() , 1);
+    string player_path = "res/image/" + character[curChar] + ".png";
+    Load(player_path.c_str(), 1);
     posPlayer.getPos(75, SCREEN_HEIGHT / 2 - 10);
     ahead = 0;
     angle = 0;
@@ -37,15 +37,22 @@ void player::fall() {
     else return;
 }
 
+// bool player::insidePipe(short int pipeWidth, short int pipeHeight){
+//     if ( !die ){
+//         return (posPlayer.x >= posPipe[ahead].x + pipeWidth pe)
+//     }
+//     return false; 
+// }
+
 void player::update(short int pipeWidth, short int pipeHeight){
     if ( !die ){
         if ( time == 0 ){
             x0 = posPlayer.y;
-            angle = -25;
+            // angle = -25;
         }
-        else if ( angle < 70 && time > 30 ){
-            angle += 3;
-        }
+        // else if ( angle < 70 && time > 30 ){
+        //     angle += 3;
+        // }
 
         if (time >= 0){
             posPlayer.y = x0 + time * time * 0.18 - 6.0 * time;
@@ -61,7 +68,8 @@ void player::update(short int pipeWidth, short int pipeHeight){
              (posPlayer.y + 5 < posPipe[ahead].y + pipeHeight || posPlayer.y  + getHeight() > posPipe[ahead].y + pipeHeight + PIPE_SPACE + 5) ){
             die = true;
         }
-        else if ( posPlayer.x > posPipe[ahead].x + pipeWidth ){
+        else if ( posPlayer.x > posPipe[ahead].x + pipeWidth && !passed[ahead] ){
+            passed[ahead] = 1; 
             ahead = (ahead + 1) % TOTAL_PIPE;
             score ++;
         }
