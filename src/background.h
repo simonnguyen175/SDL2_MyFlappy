@@ -9,13 +9,13 @@ using namespace std;
 class background : LTexture
 {
 public:
-    bool init();
+    bool init(short int id);
 
     void free();
 
     void render();
 
-    void update();
+    void update(float delta);
 
 private:
     position posBackground;

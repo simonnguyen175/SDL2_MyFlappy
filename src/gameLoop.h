@@ -24,7 +24,7 @@ class game: public LTexture{
         player player; 
         pipe pipe; 
         sound sound; 
-        background background; 
+        background layer[10]; 
         
         game(); 
         ~game();
@@ -54,6 +54,8 @@ class game: public LTexture{
         void releaseGraphic(); 
 
         void renderBackground(); 
+        
+        void updateBackground(); 
         
         void renderScoreSmall(); 
 

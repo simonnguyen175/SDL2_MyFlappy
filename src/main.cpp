@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
                     g.userInput.Type = game::input::NONE; 
                 }
                 
-                g.background.render(); 
+                g.renderBackground(); 
                 g.pipe.render(); 
                 g.land.render(); 
 
@@ -88,7 +88,7 @@ int main(int argc, char* argv[]){
                 g.userInput.Type = game::input::NONE; 
             }
 
-            g.background.render(); 
+            g.renderBackground(); 
             g.pipe.render(); 
             g.land.render(); 
             g.player.render(); 
@@ -128,7 +128,7 @@ int main(int argc, char* argv[]){
                 }
 
                 g.land.update();
-                g.background.update(); 
+                g.updateBackground(); 
                 g.pause();
             }
             else{

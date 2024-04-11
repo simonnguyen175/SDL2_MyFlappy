@@ -30,7 +30,8 @@ game::game(){
 	land.init(); 
 	pipe.init(); 
 	sound.init();
-	background.init();  
+	for (short int i = 0; i < 9; i ++) 
+		layer[i].init(i);  
 }
 
 game::~game(){
@@ -38,7 +39,8 @@ game::~game(){
 	pipe.free(); 
 	land.free(); 
 	sound.free();
-	background.free(); 
+	for (short int i = 0; i < 9; i ++) 
+		layer[i].free(); 
     Free(); 
     releaseGraphic(); 
 	cout << "out game\n"; 
@@ -102,6 +104,18 @@ void game::renderLand(){
 	image.Load("res/image/land.png", 1);
 	image.Render(SCREEN_WIDTH - image.getWidth(), SCREEN_HEIGHT - image.getHeight()); 
 	image.Free(); 
+}
+
+void game::renderBackground(){
+	for (short int i = 0; i < 9; i ++){
+		layer[i].render(); 
+	}
+}
+
+void game::updateBackground(){
+	for (short int i = 0; i < 9; i ++){
+		layer[i].update(i * 0.1); 
+	}
 }
 
 void game::renderMessage(){

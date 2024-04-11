@@ -51,7 +51,7 @@ class LTexture{
         static const short int PIPE_SPACE = 160;
         static const short int TOTAL_PIPE = 2;
         static const short int PIPE_DISTANCE = 220;
-        static const short int LAND_HEIGHT = 140;
+        static const short int LAND_HEIGHT = 150;
         static const short int PLAYER_WIDTH = 50;
         static const short int PLAYER_HEIGHT = 35;
 };

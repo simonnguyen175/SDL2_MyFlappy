@@ -3,19 +3,15 @@
 #include <iostream>
 #include <stdlib.h>
 
-bool background::init(){
+bool background::init(short int id){
     posBackground.getPos(0, 0);
-    string back_path = "res/image/background.png";
-    if (isNULL())
-    {
-        if ( Load( back_path.c_str(), 1) )
-        {
+    string back_path = "res/image/layer" + to_string(id) + ".png";
+    if ( isNULL() ){
+        if ( Load(back_path.c_str(), 1) ){
+            cout << "Load " << back_path << '\n'; 
             return true;
         }
-        else
-        {
-            return false;
-        }
+        else return false;
     }
     return false;
 }
@@ -35,6 +31,6 @@ void background::render(){
     }
 }
 
-void background::update(){
-    posBackground.x -= 2.5;
+void background::update(float delta){
+    posBackground.x -= delta;
 }
