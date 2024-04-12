@@ -2,6 +2,7 @@
 #define LAND_H
 
 #include "textureManager.h"
+#include "pipe.h"
 #include <vector>
 
 using namespace std;

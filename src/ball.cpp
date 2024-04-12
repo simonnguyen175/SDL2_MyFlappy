@@ -1,7 +1,14 @@
 #include "ball.h" 
 
-bool ball::init(int x, int y){
+bool ball::init(short int x, short int y){
     string ball_path = "res/image/" + Ball[curChar] + ".png";
+    posBall.getPos(x, y);
+    Load(ball_path.c_str(), 1); 
+    return true; 
+}
+
+bool ball::initArrow(short int x, short int y){
+    string ball_path = "res/image/arrow.png";
     posBall.getPos(x, y);
     Load(ball_path.c_str(), 1); 
     return true; 

@@ -3,8 +3,13 @@
 
 #include "textureManager.h"
 #include "pipe.h"
+#include "ball.h"
 
 using namespace std;
+
+extern ball arrow; 
+extern short int timeSpeed;
+extern bool checkDestroy; 
 
 class player: public LTexture{
     public:

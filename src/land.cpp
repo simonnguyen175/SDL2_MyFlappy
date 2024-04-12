@@ -29,6 +29,6 @@ void land::render(){
 }
 
 void land::update(){
-    posLand.x -= 3; 
+    posLand.x -= vScene; 
 }
 

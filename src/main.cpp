@@ -27,6 +27,11 @@ int main(int argc, char* argv[]){
             ballBucket.clear(); 
             isPause = 0;
             isHelpMenu = 0;
+            if ( begin ){
+                isMenu = 0;
+                begin = 0;     
+            }
+            else isMenu = 1; 
 
             if ( isMenu ){
                 g.sound.playHit(); 
@@ -45,7 +50,6 @@ int main(int argc, char* argv[]){
                 g.renderBackground(); 
                 g.pipe.render(); 
                 g.land.render(); 
-                g.renderGameTitle(); 
 
                 if ( isMenu ){
                     g.player.render(); 
@@ -56,6 +60,8 @@ int main(int argc, char* argv[]){
                     g.replay(); 
                 }
                 else{
+                    g.renderGameTitle(); 
+                    g.score = 0; 
                     g.pipe.init(); 
                     g.player.init(75, SCREEN_HEIGHT / 2 - 10);
                     g.player.render(); 
@@ -126,19 +132,24 @@ int main(int argc, char* argv[]){
         }
         else{
             g.takeInput(); 
-
+            
             if ( g.userInput.Type == game::input::PAUSE ){
                 isPause = abs(1- isPause); 
                 g.userInput.Type = game::input::NONE; 
             }  
 
-            if ( isPause == 0 && g.userInput.Type == game::input::PLAY ){
+            if ( isPause == 0 && g.userInput.Type == game::input::PLAY && timeSpeed == 0 ){
                 if ( isSound ) g.sound.playBreath(); 
                 g.player.resetTime(); 
                 g.userInput.Type = game::input::NONE; 
             }
 
             g.renderBackground(); 
+            if ( checkDestroy == 1 ){
+                g.pipe.init(); 
+                arrow.free(); 
+                checkDestroy = 0; 
+            }
             g.pipe.render(); 
             g.land.render(); 
             g.player.render(); 

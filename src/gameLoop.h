@@ -25,6 +25,7 @@ class game: public LTexture{
         pipe pipe; 
         sound sound; 
         background layer[10]; 
+        vector<ball> ballBucket; 
         
         game(); 
         ~game();

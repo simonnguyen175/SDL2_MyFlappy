@@ -3,9 +3,10 @@
 
 #include "textureManager.h"
 
-class ball:LTexture{
+class ball: public LTexture{
 public:  
-    bool init(int x, int y); 
+    bool init(short int x, short int y); 
+    bool initArrow(short int x, short int y); 
     void free(); 
     void update();
     void render(); 

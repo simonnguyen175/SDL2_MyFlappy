@@ -12,12 +12,27 @@ bool threat::init(short int x, short int y){
     return true; 
 }
 
+bool threat::initSpeed(short int x, short int y){
+    string threat_path = "res/image/speed.png";
+    posThreat.getPos(x, y);
+    Load(threat_path.c_str(), 1); 
+    curFrame = 0; 
+    return true;     
+}
+
 void threat::free(){
     Free(); 
 }
 
 void threat::render(){
     Render(posThreat.x, posThreat.y, 0, &frame[((curFrame)/10)%3]);
+    if ( ((curFrame)/15)%2 ) posThreat.y -= 1;
+    else posThreat.y += 1; 
+    curFrame++;  
+}
+
+void threat::renderSpeed(){
+    Render(posThreat.x, posThreat.y);
     if ( ((curFrame)/15)%2 ) posThreat.y -= 1;
     else posThreat.y += 1; 
     curFrame++;  
