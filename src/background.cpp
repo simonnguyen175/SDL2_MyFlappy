@@ -8,7 +8,6 @@ bool background::init(short int id){
     string back_path = "res/image/background/layer" + to_string(id) + ".png";
     if ( isNULL() ){
         if ( Load(back_path.c_str(), 1) ){
-            cout << "Load " << back_path << '\n'; 
             return true;
         }
         else return false;

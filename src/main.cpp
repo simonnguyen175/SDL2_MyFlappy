@@ -19,6 +19,7 @@ int main(int argc, char* argv[]){
     bool isSound = 1;
     bool begin = 1; 
     bool isHelpMenu = 0; 
+    bool backgroundSound = 0; 
     vector<ball> ballBucket; 
 
     while ( !g.isQuit() ){
@@ -30,16 +31,19 @@ int main(int argc, char* argv[]){
             if ( begin ){
                 isMenu = 0;
                 begin = 0;     
+                g.sound.playIntro(); 
             }
             else isMenu = 1; 
 
             if ( isMenu ){
                 g.sound.playHit(); 
                 g.player.render(); 
-            }
-
-            g.userInput.Type = game::input::NONE;
+                g.sound.replayBackground(); 
+                backgroundSound = 0; 
+            }   
             
+            g.userInput.Type = game::input::NONE; 
+
             while ( g.isDie() && !g.isQuit() ){
                 g.takeInput(); 
                 if ( isMenu == 1 && g.userInput.Type == game::input::PLAY ){
@@ -120,8 +124,12 @@ int main(int argc, char* argv[]){
                         cout << "play\n"; 
                         g.Restart();
                         isMenu = 0;
-                        begin = 0; 
                         g.userInput.Type = game::input::NONE;
+                        if ( isSound && !backgroundSound ){
+                            g.sound.stopIntro(); 
+                            g.sound.playBackground(); 
+                            backgroundSound = 1; 
+                        }
                     }
                     g.land.update();    
                 }
@@ -132,7 +140,11 @@ int main(int argc, char* argv[]){
         }
         else{
             g.takeInput(); 
-            
+
+            if ( !isSound ){
+                g.sound.background = NULL; 
+            }
+             
             if ( g.userInput.Type == game::input::PAUSE ){
                 isPause = abs(1- isPause); 
                 g.userInput.Type = game::input::NONE; 

@@ -8,13 +8,15 @@
 using namespace std;
 
 class sound:LTexture{
-    private:
+    public:
         const short int POS_X = 109 + 135;
         const short int POS_Y = 267;
         bool isPlay = 0;
         Mix_Chunk* breath = NULL;
         Mix_Chunk* hit = NULL;
         Mix_Chunk* drop = NULL;
+        Mix_Chunk* intro = NULL; 
+        Mix_Music* background = NULL;
         SDL_Rect Mute ;
         SDL_Rect Active ;
 
@@ -26,6 +28,14 @@ class sound:LTexture{
         void playBreath();
 
         void playHit();
+
+        void playBackground(); 
+
+        void playIntro(); 
+
+        void stopIntro(); 
+        
+        void replayBackground(); 
 
         void renderSound();
 

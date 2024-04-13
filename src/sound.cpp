@@ -3,10 +3,14 @@
 #include <iostream>
 #include <string>
 
+int introChannel; 
+
 bool sound::init(){
-    string breath_path = "res/sound/sfx_breath.wav";
-    string hit_path = "res/sound/sfx_bonk.wav";
+    string breath_path = "res/sound/breath.wav";
+    string hit_path = "res/sound/hit.wav";
     string sound_path = "res/image/sound.png";
+    string background_path = "res/sound/backgroundSound.mp3"; 
+    string intro_path = "res/sound/intro.wav"; 
 
     bool success = true;
 
@@ -32,6 +36,9 @@ bool sound::init(){
             success = false;
         }
 
+        background = Mix_LoadMUS(background_path.c_str()); 
+        intro = Mix_LoadWAV(intro_path.c_str());
+
         if (!Load(sound_path)){
             return false;
         }
@@ -45,13 +52,27 @@ bool sound::init(){
 
 void sound::free(){
     Free();
-
+    
     Mix_FreeChunk(breath);
     breath = NULL;
     Mix_FreeChunk(hit);
     hit = NULL;
 
     Mix_Quit();
+}
+
+void sound::replayBackground(){
+    Mix_HaltMusic(); 
+}
+
+void sound::playIntro(){
+    if ( isPlay )
+        introChannel = Mix_PlayChannel(-1, intro, -1); 
+}
+
+void sound::stopIntro(){
+    if ( isPlay )
+        Mix_HaltChannel(introChannel); 
 }
 
 void sound::playBreath(){
@@ -61,8 +82,14 @@ void sound::playBreath(){
 }
 
 void sound::playHit(){
+    cout << "play hit\n"; 
     if (isPlay)
         Mix_PlayChannel(-1, hit, 0);
+}
+
+void sound::playBackground(){
+    if (isPlay)
+        Mix_PlayMusic(background, -1); 
 }
 
 void sound::renderSound(){
