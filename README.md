@@ -5,4 +5,5 @@
   * Người chơi cũng có thể đổi nhân vật nếu muốn.
   * Điểm số mong muốn là khoảng ngưỡng 8.5.
   * Lí do mong muốn được ngưỡng điểm trên là đã bổ sung thêm một số tính năng đáng kể so với game FlappyBird gốc và đồ họa tương đối đẹp, âm thanh sinh động và nhân vật di chuyển mượt mà.
+  * Link demo game: https://drive.google.com/file/d/1EqwtNpUgxOd1Z6pkwuX9t9p2CzTwhfcU/view?usp=sharing
 
