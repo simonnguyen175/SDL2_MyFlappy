@@ -3,7 +3,7 @@
 ### MSV: 23020107  
 
 ### GIỚI THIỆU GAME 
-* Game FlappyHunter dựa theo ý tưởng game FLappyBird, có bổ sung thêm các tính năng, trạng thái của cột để tăng độ khó cho game,  
+* Game FlappyHunter dựa theo ý tưởng game FLappyBird, có bổ sung thêm các tính năng, trạng thái của cột để tăng độ khó cho game,
 ngoài ra còn thêm các threats ở các ống và súng cho nhân vật đi diệt threats và đi qua ống và bổ sung thêm phép bổ trợ tăng tốc
 cho nhân vật. 
 * Người chơi cũng có thể đổi nhân vật nếu muốn.
